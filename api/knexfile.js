@@ -7,11 +7,11 @@ module.exports = {
   development: {
     client: 'mysql',
     connection: {
-      host : '127.0.0.1',
+      host : process.env.DB_HOST,
       port : 3306,
-      user : 'root',
-      password : 'demo123',
-      database : 'route'
+      user : process.env.DB_USER,
+      password : process.env.DB_PASSWORD,
+      database : process.env.DB
     },
     migrations: {
       directory: './src/db/migrations'
@@ -25,11 +25,11 @@ module.exports = {
   staging: {
     client: 'mysql',
     connection: {
-      host : '127.0.0.1',
+      host : process.env.DB_HOST,
       port : 3306,
-      user : 'root',
-      password : 'demo123',
-      database : 'route'
+      user : process.env.DB_USER,
+      password : process.env.DB_PASSWORD,
+      database : process.env.DB
     },
     migrations: {
       directory: './src/db/migrations'
@@ -43,11 +43,11 @@ module.exports = {
   production: {
     client: 'mysql',
     connection: {
-      host : '127.0.0.1',
+      host : process.env.DB_HOST,
       port : 3306,
-      user : 'root',
-      password : 'demo123',
-      database : 'route'
+      user : process.env.DB_USER,
+      password : process.env.DB_PASSWORD,
+      database : process.env.DB
     },
     migrations: {
       directory: './src/db/migrations'
