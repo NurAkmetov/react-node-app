@@ -1,9 +1,9 @@
-import {BaseApiService} from '../controllers/baseController';
+import {BaseController} from '../controllers/baseController';
 const {VehicleType} = require("../db/models/vehicleType")
 
 const router = require('express').Router();
 
-const baseController = new BaseApiService(VehicleType, VehicleType.getProperties());
+const baseController = new BaseController(VehicleType, VehicleType.getProperties());
 
 router.route('/vehicleTypes')
     .post(baseController.postItem)

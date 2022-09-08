@@ -1,9 +1,9 @@
-import {BaseApiService} from '../controllers/baseController';
+import {BaseController} from '../controllers/baseController';
 const {RouteCategory} = require("../db/models/routeCategory")
 
 const router = require('express').Router();
 
-const baseController = new BaseApiService(RouteCategory, RouteCategory.getProperties());
+const baseController = new BaseController(RouteCategory, RouteCategory.getProperties());
 
 router.route('/lineCategories')
     .post(baseController.postItem)

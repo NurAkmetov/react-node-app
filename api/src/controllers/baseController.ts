@@ -1,7 +1,7 @@
 const db = require("../db/config/db");
 import {Request, Response, NextFunction} from "express";
 
-export class BaseApiService<TModel, SProperties> {
+export class BaseController<TModel, SProperties> {
     private readonly _model: TModel;
     private readonly _properties: SProperties[];
 
@@ -37,7 +37,7 @@ export class BaseApiService<TModel, SProperties> {
     public getItem = async (req: Request, res: Response): Promise<void> => {
         const itemId = req.params.id;
 
-        const item = await db.query(this._model).select(...this._properties).where('id', '=', itemId).getFirstOrUndefined();
+        const item = await db.query(this._model).select(...this._properties).where('id', itemId).getFirstOrUndefined();
         if (item) {
             res.json({
                 ok: true,
