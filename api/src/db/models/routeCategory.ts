@@ -1,13 +1,6 @@
-import {Column, Table} from "@wwwouter/typed-knex";
+import {Table} from "@wwwouter/typed-knex";
+import {BaseModel} from "./baseModel";
 
 @Table("routeCategories")
-export class RouteCategory {
-    @Column({primary: true})
-    public id: number;
-    @Column()
-    public name: string;
-    @Column({name: 'created_at'})
-    public createdAt: string;
-    @Column({name: 'updated_at'})
-    public updatedAt: string;
+export class RouteCategory extends BaseModel {
 }

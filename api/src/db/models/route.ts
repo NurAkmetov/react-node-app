@@ -2,13 +2,10 @@ import {Column, Table} from "@wwwouter/typed-knex";
 import {Agency} from "./agency";
 import {RouteCategory} from "./routeCategory";
 import {VehicleType} from "./vehicleType";
+import {BaseModel} from "./baseModel";
 
 @Table("routes")
-export class Route {
-    @Column({primary: true})
-    public id: number;
-    @Column()
-    public name: string;
+export class Route extends BaseModel {
     @Column()
     public direction: number;
     @Column()
@@ -19,8 +16,4 @@ export class Route {
     public routeCategory: RouteCategory;
     @Column({name: 'vehicleTypeId'})
     public vehicleType: VehicleType;
-    @Column({name: 'created_at'})
-    public createdAt: string;
-    @Column({name: 'updated_at'})
-    public updatedAt: string;
 }

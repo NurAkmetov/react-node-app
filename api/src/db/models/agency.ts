@@ -1,15 +1,8 @@
 import {Column, Table} from "@wwwouter/typed-knex";
+import {BaseModel} from "./baseModel";
 
 @Table("agencies")
-export class Agency {
-    @Column({primary: true})
-    public id: number;
-    @Column()
-    public name: string;
+export class Agency extends BaseModel {
     @Column()
     public region: string;
-    @Column({name: 'created_at'})
-    public createdAt: string;
-    @Column({name: 'updated_at'})
-    public updatedAt: string;
 }
