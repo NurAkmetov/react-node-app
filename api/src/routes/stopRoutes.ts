@@ -1,15 +1,15 @@
 import {BaseApiService} from '../controllers/baseController';
-const {Agency} = require("../db/models/agency")
+const {Stop} = require("../db/models/stop")
 
 const router = require('express').Router();
 
-const baseController = new BaseApiService(Agency, Agency.getProperties());
+const baseController = new BaseApiService(Stop, Stop.getProperties());
 
-router.route('/agencies')
+router.route('/stops')
     .post(baseController.postItem)
     .get(baseController.getItems)
 
-router.route('/agencies/:id')
+router.route('/stops/:id')
     .get(baseController.getItem)
     .put(baseController.putItem)
     .delete(baseController.deleteItem)
