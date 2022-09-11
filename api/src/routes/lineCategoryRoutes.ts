@@ -5,11 +5,11 @@ const router = require('express').Router();
 
 const baseController = new BaseController(RouteCategory, RouteCategory.getProperties());
 
-router.route('/lineCategories')
+router.route('/routeCategory')
     .post(baseController.postItem)
     .get(baseController.getItems)
 
-router.route('/lineCategories/:id')
+router.route('/routeCategory/:id')
     .get(baseController.getItem)
     .put(baseController.putItem)
     .delete(baseController.deleteItem)

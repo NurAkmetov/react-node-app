@@ -25,7 +25,14 @@ export class BaseController<TModel, SProperties> {
     }
 
     public getItems = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        await db.query(this._model).select(...this._properties).getMany()
+        const page = isNaN(parseInt(req.query.page as string)) ? 1 : parseInt(req.query.page as string);
+        const pageSize = isNaN(parseInt(req.query.page_size as string)) ? 5 : parseInt(req.query.page_size as string);
+        const offset = (page - 1) * pageSize;
+
+        await db.query(this._model).select(...this._properties)
+            .limit(pageSize)
+            .offset(offset)
+            .getMany()
             .then((items: typeof this._model[]) => res.json({
                 ok: true,
                 message: 'Items found',

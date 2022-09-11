@@ -5,11 +5,11 @@ const router = require('express').Router();
 
 const baseController = new BaseController(VehicleType, VehicleType.getProperties());
 
-router.route('/vehicleTypes')
+router.route('/vehicleType')
     .post(baseController.postItem)
     .get(baseController.getItems)
 
-router.route('/vehicleTypes/:id')
+router.route('/vehicleType/:id')
     .get(baseController.getItem)
     .put(baseController.putItem)
     .delete(baseController.deleteItem)

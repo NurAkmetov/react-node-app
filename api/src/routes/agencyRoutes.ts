@@ -5,11 +5,11 @@ const router = require('express').Router();
 
 const baseController = new BaseController(Agency, Agency.getProperties());
 
-router.route('/agencies')
+router.route('/agency')
     .post(baseController.postItem)
     .get(baseController.getItems)
 
-router.route('/agencies/:id')
+router.route('/agency/:id')
     .get(baseController.getItem)
     .put(baseController.putItem)
     .delete(baseController.deleteItem)
