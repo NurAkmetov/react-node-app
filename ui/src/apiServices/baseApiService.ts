@@ -1,16 +1,15 @@
 import {apiClient} from '.';
-import {BaseModel} from '../models/baseModel';
 import {defaultPageParams, PageParams} from "./pageParams";
 import {ConvertObjectToHttpParams} from "./pageParams";
 import {PaginatedList} from "./pageParams";
-require('dotenv').config()
+import {environment} from "../environments/environment";
 
-export abstract class BaseApiService<TModel extends BaseModel> {
-    private static baseURL: string = `${process.env.SERVER_HOST}:${process.env.PORT}`;
+export abstract class BaseApiService {
+    private static baseURL: string = environment.resourceApiURI;
 
     public static async getAll<TModel>(url: string, pageParams: PageParams = defaultPageParams) {
         const params = new ConvertObjectToHttpParams(pageParams).get();
-        const response = await apiClient.get<PaginatedList<TModel>>(`${url}/getAll?` + params, {
+        const response = await apiClient.get<PaginatedList<TModel>>(`${url}?` + params, {
             baseURL: this.baseURL
         });
 
@@ -27,7 +26,7 @@ export abstract class BaseApiService<TModel extends BaseModel> {
     }
 
     public static async getById<TModel>(url: string, id: number) {
-        const response = await apiClient.get<TModel>(`${url}/getById/${id}`, {
+        const response = await apiClient.get<TModel>(`${url}/${id}`, {
             baseURL: this.baseURL
         });
 
@@ -35,15 +34,15 @@ export abstract class BaseApiService<TModel extends BaseModel> {
     }
 
     public static async create<TModel>(url: string, item: TModel) {
-        const response = await apiClient.post<TModel>(`${url}/create`, item, {
+        const response = await apiClient.post<TModel>(`${url}`, item, {
             baseURL: this.baseURL
         });
 
         return response.data;
     }
 
-    public static async update<TModel>(url: string, item: TModel) {
-        const response = await apiClient.put<TModel>(`${url}/update`, item, {
+    public static async update<TModel>(url: string, item: TModel, id: number) {
+        const response = await apiClient.put<TModel>(`${url}/${id}`, item, {
             baseURL: this.baseURL
         });
 
@@ -51,7 +50,7 @@ export abstract class BaseApiService<TModel extends BaseModel> {
     }
 
     public static async delete<TModel>(url: string, id: number) {
-        const response = await apiClient.delete<TModel>(`${url}/delete/${id}`, {
+        const response = await apiClient.delete<TModel>(`${url}/${id}`, {
             baseURL: this.baseURL
         });
 

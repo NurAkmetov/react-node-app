@@ -1,0 +1,56 @@
+﻿$popup-offset-x: 0;
+$popup-offset-y: 0;
+
+.container {
+    overflow: auto;
+
+    & > .card {
+        display: flex;
+        justify-content: center;
+        margin: 15px;
+        padding: 15px;
+
+        & > .section {
+            width: 800px;
+            margin: 20px auto 10px;
+            font-weight: 600;
+        }
+
+        & > .form-layout {
+            border: 1px solid #edebe9;
+            border-radius: 5px;
+            width: 75%;
+            margin: 15px;
+            padding: 15px;
+        }
+    }
+
+    .row {
+        display: flex;
+    }
+
+    .column {
+        flex: 50%;
+    }
+
+    button {
+        text-align: center;
+        padding: 5px;
+        cursor: pointer;
+        width: 100px;
+        border-radius: 5px;
+        margin: 5px 5px;
+        background-color: #0089d0;
+        border-color: transparent;
+        color: #fff;
+
+        &:hover {
+            background-color: #0972a9;
+        }
+    }
+
+    .server-error {
+        font-size: 14px;
+        color: #d83b01;
+    }
+}

@@ -11,6 +11,6 @@ export class Stop {
     public route: Route;
 
     static getProperties() {
-        return ['id', 'name', 'latitude', 'longitude', 'routeId'];
+        return ['id', 'name', 'latitude', 'longitude', 'routeId', 'createdAt', 'updatedAt'];
     }
 }

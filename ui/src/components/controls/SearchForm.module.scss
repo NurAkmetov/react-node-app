@@ -1,0 +1,46 @@
+﻿.input-section {
+    position: relative;
+    width: 200px;
+
+    & > input {
+        margin-bottom: 5px;
+        box-sizing: border-box;
+        border: 1px solid #d2d0ce;
+        border-radius: 4px;
+
+        &:focus {
+            outline: none;
+        }
+
+        &::placeholder {
+            font-style: italic;
+        }
+    }
+
+    & > .clear-button {
+        position: absolute;
+        left: 162px;
+        bottom: 6px;
+        cursor: pointer;
+
+        svg {
+            width: 9px;
+            height: 9px;
+            fill: #d2d0ce;
+        }
+
+        &:hover {
+            svg {
+                fill: #3b3a39;
+            }
+        }
+    }
+
+    & > input + .clear-button {
+        visibility: visible;
+    }
+
+    & > input:placeholder-shown + .clear-button {
+        visibility: hidden;
+    }
+}

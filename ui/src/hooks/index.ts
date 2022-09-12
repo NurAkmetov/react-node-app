@@ -1,19 +1,18 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useMutation, useInfiniteQuery, useQuery } from 'react-query';
-import { PaginatedList } from '../apiServices/pageParams';
-import { BaseApiService } from '../apiServices/baseApiService';
-import { defaultPageParams } from '../apiServices/pageParams';
-import { nameof } from '../utils';
+import {useEffect, useMemo, useState} from 'react';
+import {useMutation, useInfiniteQuery, useQuery} from 'react-query';
+import {PaginatedList} from '../apiServices/pageParams';
+import {BaseApiService} from '../apiServices/baseApiService';
+import {defaultPageParams} from '../apiServices/pageParams';
 
-export function usePaginatedItems<T>(page: number, query?: string, model?: new () => T) {
+export function usePaginatedItems<T>(model: new () => T, page: number, query?: string) {
     const fetchData: Promise<PaginatedList<T>> = useMemo(() => {
         return (typeof (query) === 'undefined' || query === '')
-            ? BaseApiService.getAll(nameof(Object(model)), { ...defaultPageParams, page })
-            : BaseApiService.search(nameof(Object(model)), { ...defaultPageParams, page, q: query });
+            ? BaseApiService.getAll(model.name, {...defaultPageParams, page})
+            : BaseApiService.search(model.name, {...defaultPageParams, page, q: query});
     }, [page, model, query]);
 
-    const { hasNextPage, isLoading, data } = useInfiniteQuery<PaginatedList<T>, Error>(
-        `${nameof(Object(model))} ${page} ${query}`,
+    const {hasNextPage, isLoading, data} = useInfiniteQuery<PaginatedList<T>, Error>(
+        `${model.name} ${page} ${query}`,
         () => fetchData,
         {
             getNextPageParam: response => {
@@ -37,8 +36,7 @@ export function usePaginatedItems<T>(page: number, query?: string, model?: new (
 
         if (page === 1 && data && (data?.pages[0].results.length === data.pages[0].pageSize)) {
             setShowPagination(true);
-        }
-        else if (page === 1 && data && (data?.pages[0].results.length < data.pages[0].pageSize)) {
+        } else if (page === 1 && data && (data?.pages[0].results.length < data.pages[0].pageSize)) {
             setShowPagination(false);
         }
     }, [data, page, currentData]);
@@ -58,31 +56,31 @@ export function usePaginatedItems<T>(page: number, query?: string, model?: new (
 }
 
 export function useGetItem<T>(id: number, model: new () => T) {
-    const { data, isError, isLoading } = useQuery<T, Error>(
-        `${nameof(Object(model))} ${id}`,
-        () => BaseApiService.getById(nameof(Object(model)), id), {}
+    const {data, isError, isLoading} = useQuery<T, Error>(
+        `${model.name} ${id}`,
+        () => BaseApiService.getById(model.name, id), {}
     );
 
-    return { item: data, isLoading, isError };
+    return {item: data, isLoading, isError};
 }
 
 export function useCreateItem<T>(model: new () => T) {
-    const { mutate } =
-        useMutation((item: T) => BaseApiService.create(nameof(Object(model)), item));
+    const {mutate} =
+        useMutation((item: T) => BaseApiService.create(model.name, item));
 
-    return { add: mutate };
+    return {add: mutate};
 }
 
-export function useUpdateItem<T>(model: new () => T) {
-    const { mutate } =
-        useMutation((item: T) => BaseApiService.update(nameof(Object(model)), item));
+export function useUpdateItem<T>(model: new () => T, id: number) {
+    const {mutate} =
+        useMutation((item: T) => BaseApiService.update(model.name, item, id));
 
-    return { update: mutate };
+    return {update: mutate};
 }
 
 export function useDeleteItem<T>(model: new () => T) {
-    const { mutate } =
-        useMutation((id: number) => BaseApiService.delete(nameof(Object(model)), id));
+    const {mutate} =
+        useMutation((id: number) => BaseApiService.delete(model.name, id));
 
-    return { delete: mutate };
+    return {delete: mutate};
 }

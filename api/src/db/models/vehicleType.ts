@@ -7,6 +7,6 @@ export class VehicleType extends BaseModel {
     public price: number;
 
     static getProperties() {
-        return ['id', 'name', 'price'];
+        return ['id', 'name', 'price', 'createdAt', 'updatedAt'];
     }
 }

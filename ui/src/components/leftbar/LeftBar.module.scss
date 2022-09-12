@@ -1,0 +1,43 @@
+﻿.left-bar {
+    width: 250px;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    scrollbar-width: thin;
+    scrollbar-color: #b3b0ad #edebe9;
+    background: #faf9f8;
+
+    & > .menu {
+        width: 250px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        margin: 5px;
+        padding: 10px;
+        height: 100%;
+        background: #ffffff;
+
+        & > .header {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 25px;
+
+            & > .logo {
+                width: 35px;
+                height: 35px;
+            }
+
+            & > .menu-text {
+                font-size: 15px;
+                font-weight: 600;
+            }
+        }
+
+        & > .sub-items {
+            color: #8a8886;
+            padding-left: 25px;
+        }
+    }
+}

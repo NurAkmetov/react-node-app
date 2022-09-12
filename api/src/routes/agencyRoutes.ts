@@ -9,6 +9,9 @@ router.route('/agency')
     .post(baseController.postItem)
     .get(baseController.getItems)
 
+router.route('/agency/search')
+    .get(baseController.searchItems)
+
 router.route('/agency/:id')
     .get(baseController.getItem)
     .put(baseController.putItem)

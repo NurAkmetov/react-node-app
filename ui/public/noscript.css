@@ -1,0 +1,41 @@
+﻿noscript > .error-modal {
+    width: 100%;
+    height: 100%;
+    color: silver;
+    position: absolute;
+}
+
+    noscript > .error-modal > .dimmer {
+        width: 100%;
+        height: 100%;
+        background-color: #00000010;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        noscript > .error-modal > .dimmer > .content {
+            width: 334px;
+            padding: 24px;
+            border-radius: 5px;
+            border: 1px solid #d2d0ce;
+            background-color: silver;
+            display: flex;
+            flex-direction: column;
+        }
+
+            noscript > .error-modal > .dimmer > .content > .header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 5px;
+            }
+
+                noscript > .error-modal > .dimmer > .content > .header > .logo {
+                    width: 159px;
+                    height: 53px;
+                }
+
+            noscript > .error-modal > .dimmer > .content > *:not(:first-child) {
+                margin-top: 15px;
+            }

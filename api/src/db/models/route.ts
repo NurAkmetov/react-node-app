@@ -18,6 +18,6 @@ export class Route extends BaseModel {
     public vehicleType: VehicleType;
 
     static getProperties() {
-        return ['id', 'name', 'direction', 'distance', 'agencyId', 'routeCategoryId', 'vehicleTypeId'];
+        return ['id', 'name', 'direction', 'distance', 'agencyId', 'routeCategoryId', 'vehicleTypeId', 'createdAt', 'updatedAt'];
     }
 }
