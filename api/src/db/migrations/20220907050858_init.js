@@ -49,6 +49,8 @@ exports.up = function(knex) {
             table.integer('longitude');
             table.integer('routeId').unsigned();
             table.foreign('routeId').references('routes.id');
+
+            table.timestamps(true, true);
         })
 };
 

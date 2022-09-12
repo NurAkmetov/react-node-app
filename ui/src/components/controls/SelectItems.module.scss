@@ -1,0 +1,33 @@
+﻿.select-field {
+    padding: 3px;
+    margin: 10px auto;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    & > label {
+        color: black;
+        margin-bottom: 10px;
+    }
+
+    & > input {
+        border: 1px solid #edebe9;
+        outline: none;
+        background: #fff;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    & > .warning {
+        color: #d83b01;
+        padding: 9px 0 9px 0;
+        font-weight: 600;
+    }
+
+    & > .error {
+        color: #d83b01;
+        position: absolute;
+        bottom: -18%;
+    }
+}

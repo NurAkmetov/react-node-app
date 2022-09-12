@@ -16,7 +16,7 @@ const LeftBarInner: React.ForwardRefRenderFunction<HTMLDivElement, IProps> = (pr
     const { pathname } = location;
 
     const agenciesPath = '/agencies';
-    const routeCategoryPath = '/routeCategoryPath';
+    const routeCategoryPath = '/routeCategories';
     const vehicleTypesPath = '/vehicleTypes';
     const stopsPath = '/stops';
     const routePath = '/routes';

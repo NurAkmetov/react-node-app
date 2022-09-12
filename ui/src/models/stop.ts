@@ -1,11 +1,9 @@
 import {Route} from "./route";
+import {BaseModel} from "./baseModel";
 
-export class Stop {
+export class Stop extends BaseModel{
     public latitude: number;
     public longitude: number;
-    public route: Route;
-
-    static getProperties() {
-        return ['id', 'name', 'latitude', 'longitude', 'routeId'];
-    }
+    public route?: Route;
+    public routeId: number;
 }

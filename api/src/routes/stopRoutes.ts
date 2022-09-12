@@ -1,17 +1,20 @@
-import {BaseController} from '../controllers/baseController';
+import {StopController} from "../controllers/stopController";
 const {Stop} = require("../db/models/stop")
 
 const router = require('express').Router();
 
-const baseController = new BaseController(Stop, Stop.getProperties());
+const stopController = new StopController(Stop, Stop.getProperties());
 
 router.route('/stop')
-    .post(baseController.postItem)
-    .get(baseController.getItems)
+    .post(stopController.postItem)
+    .get(stopController.getItems)
+
+router.route('/stop/search')
+    .get(stopController.searchItems)
 
 router.route('/stop/:id')
-    .get(baseController.getItem)
-    .put(baseController.putItem)
-    .delete(baseController.deleteItem)
+    .get(stopController.getItem)
+    .put(stopController.putItem)
+    .delete(stopController.deleteItem)
 
 module.exports = router;

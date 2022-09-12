@@ -9,6 +9,9 @@ router.route('/routeCategory')
     .post(baseController.postItem)
     .get(baseController.getItems)
 
+router.route('/routeCategory/search')
+    .get(baseController.searchItems)
+
 router.route('/routeCategory/:id')
     .get(baseController.getItem)
     .put(baseController.putItem)

@@ -12,10 +12,16 @@ export class Route extends BaseModel {
     public distance: number;
     @Column({name: 'agencyId'})
     public agency: Agency;
+    @Column()
+    public agencyId: number;
     @Column({name: 'routeCategoryId'})
     public routeCategory: RouteCategory;
+    @Column()
+    public routeCategoryId: number;
     @Column({name: 'vehicleTypeId'})
     public vehicleType: VehicleType;
+    @Column()
+    public vehicleTypeId: number;
 
     static getProperties() {
         return ['id', 'name', 'direction', 'distance', 'agencyId', 'routeCategoryId', 'vehicleTypeId', 'createdAt', 'updatedAt'];

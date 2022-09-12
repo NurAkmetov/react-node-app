@@ -9,6 +9,9 @@ router.route('/vehicleType')
     .post(baseController.postItem)
     .get(baseController.getItems)
 
+router.route('/vehicleType/search')
+    .get(baseController.searchItems)
+
 router.route('/vehicleType/:id')
     .get(baseController.getItem)
     .put(baseController.putItem)
