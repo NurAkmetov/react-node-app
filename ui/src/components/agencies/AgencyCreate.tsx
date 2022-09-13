@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {useHistory} from 'react-router';
 import {useCreateItem} from '../../hooks';
+import {useStores} from "../../stores/store";
 import {Agency} from '../../models/agency';
 import {InputField} from '../controls/InputField';
 import {Header} from '../controls/Header';
@@ -30,6 +31,12 @@ const AgencyAddInner: React.ForwardRefRenderFunction<HTMLDivElement> = (props, r
     const [serverError, setServerError] = useState('');
 
     const [showModal, setShowModal] = useState(false);
+
+    const {networkStore} = useStores();
+
+    useEffect(() => {
+        networkStore.setLoading(createAgency.isLoading);
+    }, [createAgency.isLoading]);
 
     useEffect(() => {
         if (Object.values(errors).some(value => typeof (value) !== 'undefined')) {

@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import {useHistory} from 'react-router';
 import {useCreateItem} from '../../hooks';
 import {RouteCategory} from '../../models/routeCategory';
+import {useStores} from "../../stores/store";
 import {InputField} from '../controls/InputField';
 import {Header} from '../controls/Header';
 import {SectionHeader} from '../controls/SectionHeader';
@@ -30,6 +31,12 @@ const RouteCategoryAddInner: React.ForwardRefRenderFunction<HTMLDivElement> = (p
     const [serverError, setServerError] = useState('');
 
     const [showModal, setShowModal] = useState(false);
+
+    const {networkStore} = useStores();
+
+    useEffect(() => {
+        networkStore.setLoading(createRouteCategory.isLoading);
+    }, [createRouteCategory.isLoading]);
 
     useEffect(() => {
         if (Object.values(errors).some(value => typeof (value) !== 'undefined')) {
@@ -72,7 +79,7 @@ const RouteCategoryAddInner: React.ForwardRefRenderFunction<HTMLDivElement> = (p
                 },
                 onError: error => {
                     const fetchError = error as any;
-                    setServerError(fetchError.response.data.message);
+                    setServerError(fetchError.response.data.msg);
                     setValid(false);
                 }
             });

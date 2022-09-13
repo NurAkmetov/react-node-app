@@ -7,8 +7,9 @@ import {Header} from '../controls/Header';
 import {InputField} from '../controls/InputField';
 import {SectionHeader} from '../controls/SectionHeader';
 import {Confirm} from "../controls/Confirm";
-import styles from '../../index.module.scss';
 import {format} from "date-fns";
+import {useStores} from "../../stores/store";
+import styles from '../../index.module.scss';
 
 type ErrorState = {
     name?: string,
@@ -35,6 +36,12 @@ const AgencyUpdateInner: React.ForwardRefRenderFunction<HTMLDivElement> = (props
     const [serverError, setServerError] = useState('');
 
     const [showModal, setShowModal] = useState(false);
+
+    const {networkStore} = useStores();
+
+    useEffect(() => {
+        networkStore.setLoading(updateAgency.isLoading);
+    }, [updateAgency.isLoading]);
 
     useEffect(() => {
         if (Object.values(errors).some(value => typeof (value) !== 'undefined')) {

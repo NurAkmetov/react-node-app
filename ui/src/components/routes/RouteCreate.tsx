@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {useHistory} from 'react-router';
 import {useCreateItem} from '../../hooks';
+import {useStores} from "../../stores/store";
 import {Route as Line} from '../../models/route';
 import {Agency} from '../../models/agency';
 import {VehicleType} from '../../models/vehicleType';
@@ -39,6 +40,12 @@ const RouteAddInner: React.ForwardRefRenderFunction<HTMLDivElement> = (props, re
     const [serverError, setServerError] = useState('');
 
     const [showModal, setShowModal] = useState(false);
+
+    const {networkStore} = useStores();
+
+    useEffect(() => {
+        networkStore.setLoading(createRoute.isLoading);
+    }, [createRoute.isLoading]);
 
     useEffect(() => {
         if (Object.values(errors).some(value => typeof (value) !== 'undefined')) {

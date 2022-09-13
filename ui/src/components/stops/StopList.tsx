@@ -1,6 +1,8 @@
+import * as React from "react";
 import {FC, useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {usePaginatedItems} from '../../hooks';
+import {useStores} from "../../stores/store";
 import {Stop} from '../../models/stop';
 import {Button} from '../controls/Button';
 import {Header} from '../controls/Header';
@@ -15,6 +17,12 @@ export const StopList: FC = () => {
     const [page, setPage] = useState(1);
 
     const stops = usePaginatedItems(Stop, page, query);
+
+    const {networkStore} = useStores();
+
+    React.useEffect(() => {
+        networkStore.setLoading(stops.isLoading);
+    }, [stops.isLoading]);
 
     useEffect(() => {
         if (query !== '' || typeof (query) !== 'undefined') {

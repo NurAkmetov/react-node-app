@@ -1,6 +1,7 @@
 import {FC, useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {usePaginatedItems} from '../../hooks';
+import {useStores} from "../../stores/store";
 import {RouteCategory} from '../../models/routeCategory';
 import {Button} from '../controls/Button';
 import {Header} from '../controls/Header';
@@ -15,6 +16,12 @@ export const RouteCategoryList: FC = () => {
     const [page, setPage] = useState(1);
 
     const routeCategories = usePaginatedItems(RouteCategory, page, query);
+
+    const {networkStore} = useStores();
+
+    useEffect(() => {
+        networkStore.setLoading(routeCategories.isLoading);
+    }, [routeCategories.isLoading]);
 
     useEffect(() => {
         if (query !== '' || typeof (query) !== 'undefined') {

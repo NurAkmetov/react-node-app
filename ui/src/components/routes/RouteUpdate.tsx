@@ -2,7 +2,8 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import {useGetItem, useUpdateItem} from '../../hooks';
-import {Route, Route as Line} from '../../models/route';
+import {useStores} from "../../stores/store";
+import {Route as Line} from '../../models/route';
 import {Agency} from '../../models/agency';
 import {VehicleType} from '../../models/vehicleType';
 import {RouteCategory} from '../../models/routeCategory';
@@ -28,6 +29,12 @@ const RouteUpdateInner: React.ForwardRefRenderFunction<HTMLDivElement> = (props,
     const updateRoute = useUpdateItem(Line, id);
 
     const [route, setRoute] = React.useState(getRoute.item);
+
+    const {networkStore} = useStores();
+
+    useEffect(() => {
+        networkStore.setLoading(updateRoute.isLoading);
+    }, [updateRoute.isLoading]);
 
     useEffect(() => {
         setRoute(getRoute.item);

@@ -65,22 +65,22 @@ export function useGetItem<T>(id: number, model: new () => T) {
 }
 
 export function useCreateItem<T>(model: new () => T) {
-    const {mutate} =
+    const {mutate, isLoading} =
         useMutation((item: T) => BaseApiService.create(model.name, item));
 
-    return {add: mutate};
+    return {add: mutate, isLoading};
 }
 
 export function useUpdateItem<T>(model: new () => T, id: number) {
-    const {mutate} =
+    const {mutate, isLoading} =
         useMutation((item: T) => BaseApiService.update(model.name, item, id));
 
-    return {update: mutate};
+    return {update: mutate, isLoading};
 }
 
 export function useDeleteItem<T>(model: new () => T) {
-    const {mutate} =
+    const {mutate, isLoading} =
         useMutation((id: number) => BaseApiService.delete(model.name, id));
 
-    return {delete: mutate};
+    return {delete: mutate, isLoading};
 }

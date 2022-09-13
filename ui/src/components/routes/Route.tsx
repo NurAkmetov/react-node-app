@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import {useQueryClient} from 'react-query';
 import {useDeleteItem, useGetItem} from '../../hooks';
+import {useStores} from "../../stores/store";
 import { format } from 'date-fns';
 import {Route} from "../../models/route";
 import {Button} from '../controls/Button';
@@ -19,6 +20,12 @@ const RouteItemInner: React.ForwardRefRenderFunction<HTMLDivElement, IProps> = (
     const route = useGetItem(id, Route);
     const deleteRoute = useDeleteItem(Route);
     const queryClient = useQueryClient();
+
+    const {networkStore} = useStores();
+
+    React.useEffect(() => {
+        networkStore.setLoading(route.isLoading);
+    }, [route.isLoading]);
 
     const [showModal, setShowModal] = React.useState(false);
 

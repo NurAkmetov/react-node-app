@@ -1,6 +1,7 @@
 import {FC, useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {usePaginatedItems} from '../../hooks';
+import {useStores} from "../../stores/store";
 import {VehicleType} from '../../models/vehicleType';
 import {Button} from '../controls/Button';
 import {Header} from '../controls/Header';
@@ -15,6 +16,12 @@ export const VehicleTypeList: FC = () => {
     const [page, setPage] = useState(1);
 
     const vehicleTypes = usePaginatedItems(VehicleType, page, query);
+
+    const {networkStore} = useStores();
+
+    useEffect(() => {
+        networkStore.setLoading(vehicleTypes.isLoading);
+    }, [vehicleTypes.isLoading]);
 
     useEffect(() => {
         if (query !== '' || typeof (query) !== 'undefined') {

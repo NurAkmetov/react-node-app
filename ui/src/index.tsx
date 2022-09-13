@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {StoreProvider, rootStores} from "./stores/store";
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
 import {QueryClient, QueryClientProvider} from 'react-query';
@@ -15,13 +16,13 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-    <React.StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <Router history={history}>
-                <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+        <Router history={history}>
+            <BrowserRouter>
+                <StoreProvider value={rootStores}>
                     <App/>
-                </BrowserRouter>
-            </Router>
-        </QueryClientProvider>
-    </React.StrictMode>
+                </StoreProvider>
+            </BrowserRouter>
+        </Router>
+    </QueryClientProvider>
 );

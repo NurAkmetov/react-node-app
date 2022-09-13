@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import {useQueryClient} from 'react-query';
 import {useDeleteItem, useGetItem} from '../../hooks';
+import {useStores} from "../../stores/store";
 import { format } from 'date-fns';
 import {VehicleType} from "../../models/vehicleType";
 import {Button} from '../controls/Button';
@@ -21,6 +22,12 @@ const VehicleTypeItemInner: React.ForwardRefRenderFunction<HTMLDivElement, IProp
     const queryClient = useQueryClient();
 
     const [showModal, setShowModal] = React.useState(false);
+
+    const {networkStore} = useStores();
+
+    React.useEffect(() => {
+        networkStore.setLoading(vehicleType.isLoading);
+    }, [vehicleType.isLoading]);
 
     const handleClickOnDelete = () => {
         setShowModal(true);

@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {useHistory} from 'react-router';
 import {useCreateItem} from '../../hooks';
+import {useStores} from "../../stores/store";
 import {Stop} from '../../models/stop';
 import {Route} from '../../models/route';
 import {InputField} from '../controls/InputField';
@@ -19,7 +20,7 @@ type ErrorState = {
 
 const StopAddInner: React.ForwardRefRenderFunction<HTMLDivElement> = (props, ref) => {
     const history = useHistory();
-    const createRouteCategory = useCreateItem(Stop);
+    const createStop = useCreateItem(Stop);
 
     const [stop, setStop] = useState<Stop>(new Stop());
 
@@ -33,6 +34,12 @@ const StopAddInner: React.ForwardRefRenderFunction<HTMLDivElement> = (props, ref
     const [serverError, setServerError] = useState('');
 
     const [showModal, setShowModal] = useState(false);
+
+    const {networkStore} = useStores();
+
+    useEffect(() => {
+        networkStore.setLoading(createStop.isLoading);
+    }, [createStop.isLoading]);
 
     useEffect(() => {
         if (Object.values(errors).some(value => typeof (value) !== 'undefined')) {
@@ -67,7 +74,7 @@ const StopAddInner: React.ForwardRefRenderFunction<HTMLDivElement> = (props, ref
             return;
         }
 
-        createRouteCategory.add(stop,
+        createStop.add(stop,
             {
                 onSuccess: () => {
                     setShowModal(false);

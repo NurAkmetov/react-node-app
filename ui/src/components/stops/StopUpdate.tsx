@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import {useGetItem, useUpdateItem} from '../../hooks';
+import {useStores} from "../../stores/store";
 import {Stop} from '../../models/stop';
 import {Route} from '../../models/route';
 import {Header} from '../controls/Header';
@@ -21,7 +22,7 @@ const StopUpdateInner: React.ForwardRefRenderFunction<HTMLDivElement> = (props, 
     const history = useHistory();
     const {id} = useParams<any>();
     const getStop = useGetItem(id, Stop);
-    const updateRoute = useUpdateItem(Stop, id);
+    const updateStop = useUpdateItem(Stop, id);
 
     const [stop, setStop] = React.useState(getStop.item);
 
@@ -39,6 +40,12 @@ const StopUpdateInner: React.ForwardRefRenderFunction<HTMLDivElement> = (props, 
     const [serverError, setServerError] = useState('');
 
     const [showModal, setShowModal] = useState(false);
+
+    const {networkStore} = useStores();
+
+    useEffect(() => {
+        networkStore.setLoading(updateStop.isLoading);
+    }, [updateStop.isLoading]);
 
     useEffect(() => {
         if (Object.values(errors).some(value => typeof (value) !== 'undefined')) {
@@ -82,7 +89,7 @@ const StopUpdateInner: React.ForwardRefRenderFunction<HTMLDivElement> = (props, 
         stop.updatedAt = updateDate;
         delete stop.route;
 
-        updateRoute.update(stop,
+        updateStop.update(stop,
             {
                 onSuccess: () => {
                     setShowModal(false);

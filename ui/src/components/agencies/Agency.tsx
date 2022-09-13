@@ -2,7 +2,8 @@ import * as React from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import {useQueryClient} from 'react-query';
 import {useDeleteItem, useGetItem} from '../../hooks';
-import { format } from 'date-fns';
+import {useStores} from "../../stores/store";
+import {format} from 'date-fns';
 import {Agency} from "../../models/agency";
 import {Button} from '../controls/Button';
 import {Header} from "../controls/Header";
@@ -19,6 +20,12 @@ const AgencyItemInner: React.ForwardRefRenderFunction<HTMLDivElement, IProps> = 
     const agency = useGetItem(id, Agency);
     const deleteAgency = useDeleteItem(Agency);
     const queryClient = useQueryClient();
+
+    const {networkStore} = useStores();
+
+    React.useEffect(() => {
+        networkStore.setLoading(agency.isLoading);
+    }, [agency.isLoading]);
 
     const [showModal, setShowModal] = React.useState(false);
 
@@ -76,7 +83,8 @@ const AgencyItemInner: React.ForwardRefRenderFunction<HTMLDivElement, IProps> = 
                         </tbody>
                     </table>
                     <div className={styles.buttons}>
-                        <Button state='primary' onClick={() => history.push(`/agencies/update/${agency.item?.id}`)}>
+                        <Button state='primary'
+                                onClick={() => history.push(`/agencies/update/${agency.item?.id}`)}>
                             Изменить
                         </Button>
                         <Button state='secondary' onClick={handleClickOnDelete}>
@@ -90,7 +98,7 @@ const AgencyItemInner: React.ForwardRefRenderFunction<HTMLDivElement, IProps> = 
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
 export const AgencyItem = React.forwardRef(AgencyItemInner);

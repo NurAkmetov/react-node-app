@@ -10,7 +10,7 @@ export class BaseController<TModel, SProperties> {
         this._properties = properties;
     }
 
-    public postItem = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    public postItem = async (req: Request, res: Response): Promise<void> => {
         const props = req.body;
 
         await db.query(this._model).insertItem(props)
@@ -21,7 +21,10 @@ export class BaseController<TModel, SProperties> {
                     item: props
                 })
             })
-            .catch(next);
+            .catch((e: any) => {
+                console.log('error: ', e);
+                res.status(400).send({msg: e.sqlMessage});
+            });
     }
 
     public getItems = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -71,7 +74,7 @@ export class BaseController<TModel, SProperties> {
         }
     }
 
-    public putItem = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    public putItem = async (req: Request, res: Response): Promise<void> => {
         const itemId = req.params.id;
         const props = req.body;
 
@@ -80,10 +83,13 @@ export class BaseController<TModel, SProperties> {
                 ok: true,
                 message: 'Item updated'
             }))
-            .catch(next)
+            .catch((e: any) => {
+                console.log('error: ', e);
+                res.status(400).send({msg: e.sqlMessage});
+            });
     }
 
-    public deleteItem = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    public deleteItem = async (req: Request, res: Response): Promise<void> => {
         const itemId = req.params.id
 
         await db.query(this._model).where('id', itemId).del()
@@ -91,6 +97,9 @@ export class BaseController<TModel, SProperties> {
                 ok: true,
                 message: `Item '${itemId}' deleted`
             }))
-            .catch(next)
+            .catch((e: any) => {
+                console.log('error: ', e);
+                res.status(400).send({msg: e.sqlMessage});
+            });
     }
 }

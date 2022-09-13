@@ -1,14 +1,16 @@
 import {FC, useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {usePaginatedItems} from '../../hooks';
+import {useStores} from "../../stores/store";
 import {Agency} from '../../models/agency';
 import {Button} from '../controls/Button';
 import {Header} from '../controls/Header';
 import {Pagination} from '../controls/Pagination';
 import {SearchForm} from '../controls/SearchForm';
+import {observer} from "mobx-react"
 import styles from '../../styles/List.module.scss';
 
-export const AgencyList: FC = () => {
+const List: FC = () => {
     const history = useHistory();
 
     const [query, setQuery] = useState('');
@@ -16,14 +18,19 @@ export const AgencyList: FC = () => {
 
     const agencies = usePaginatedItems(Agency, page, query);
 
+    const {networkStore} = useStores();
+
+    useEffect(() => {
+        networkStore.setLoading(agencies.isLoading);
+    }, [agencies.isLoading]);
+
     useEffect(() => {
         if (query !== '' || typeof (query) !== 'undefined') {
             setPage(1);
         }
     }, [query]);
 
-    return (
-        <div className={styles['list']}>
+    return (<div className={styles['list']}>
             <Header title='Перевозчики'/>
             <div className={styles.container}>
                 <Button state='primary' onClick={() => history.push(`/agencies/create`)}>
@@ -83,3 +90,5 @@ export const AgencyList: FC = () => {
         </div>
     )
 }
+
+export const AgencyList = observer(List);

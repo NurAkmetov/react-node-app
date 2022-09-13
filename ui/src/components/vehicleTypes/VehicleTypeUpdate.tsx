@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import {useGetItem, useUpdateItem} from '../../hooks';
+import {useStores} from "../../stores/store";
 import {VehicleType} from '../../models/vehicleType';
 import {Header} from '../controls/Header';
 import {InputField} from '../controls/InputField';
@@ -21,6 +22,12 @@ const VehicleTypeUpdateInner: React.ForwardRefRenderFunction<HTMLDivElement> = (
     const updateVehicleType = useUpdateItem(VehicleType, id);
 
     const [vehicleType, setVehicleType] = React.useState(getVehicleType.item);
+
+    const {networkStore} = useStores();
+
+    useEffect(() => {
+        networkStore.setLoading(updateVehicleType.isLoading);
+    }, [updateVehicleType.isLoading]);
 
     useEffect(() => {
         setVehicleType(getVehicleType.item);

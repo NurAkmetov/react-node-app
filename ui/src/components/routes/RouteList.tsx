@@ -1,6 +1,7 @@
 import {FC, useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {usePaginatedItems} from '../../hooks';
+import {useStores} from "../../stores/store";
 import {Route as Line} from '../../models/route';
 import {Button} from '../controls/Button';
 import {Header} from '../controls/Header';
@@ -15,6 +16,12 @@ export const RouteList: FC = () => {
     const [page, setPage] = useState(1);
 
     const routes = usePaginatedItems(Line, page, query);
+
+    const {networkStore} = useStores();
+
+    useEffect(() => {
+        networkStore.setLoading(routes.isLoading);
+    }, [routes.isLoading]);
 
     useEffect(() => {
         if (query !== '' || typeof (query) !== 'undefined') {

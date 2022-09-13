@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import {useGetItem, useUpdateItem} from '../../hooks';
+import {useStores} from "../../stores/store";
 import {RouteCategory} from '../../models/routeCategory';
 import {Header} from '../controls/Header';
 import {InputField} from '../controls/InputField';
@@ -21,6 +22,12 @@ const RouteCategoryUpdateInner: React.ForwardRefRenderFunction<HTMLDivElement> =
     const updateRouteCategory = useUpdateItem(RouteCategory, id);
 
     const [routeCategory, setAgency] = React.useState(getRouteCategory.item);
+
+    const {networkStore} = useStores();
+
+    useEffect(() => {
+        networkStore.setLoading(updateRouteCategory.isLoading);
+    }, [updateRouteCategory.isLoading]);
 
     useEffect(() => {
         setAgency(getRouteCategory.item);
