@@ -6,6 +6,7 @@ MERN: typed-knex, react-query, react-router and mobx
 ##### DB_HOST - is a host of your database
 ##### DB_USER - database user
 ##### DB_PASSWORD - password for your database
+##### PORT - port for server
 ###### _You can configure knexFile.js and migrate.ts files if needed_
 ### Open a terminal and use the following commands(_please run all commands from UI_):
 ##### 1. run '**npm run install-both**' - to install all packages for UI and API. It will also run migrations
