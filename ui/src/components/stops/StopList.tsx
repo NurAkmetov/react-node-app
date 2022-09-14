@@ -2,6 +2,7 @@ import * as React from "react";
 import {FC, useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {usePaginatedItems} from '../../hooks';
+import {useDebounce} from "../../hooks/debounce";
 import {useStores} from "../../stores/store";
 import {Stop} from '../../models/stop';
 import {Button} from '../controls/Button';
@@ -14,9 +15,10 @@ export const StopList: FC = () => {
     const history = useHistory();
 
     const [query, setQuery] = useState('');
+    const debounced = useDebounce(query);
     const [page, setPage] = useState(1);
 
-    const stops = usePaginatedItems(Stop, page, query);
+    const stops = usePaginatedItems(Stop, page, debounced);
 
     const {networkStore} = useStores();
 

@@ -1,6 +1,7 @@
 import {FC, useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {usePaginatedItems} from '../../hooks';
+import {useDebounce} from "../../hooks/debounce";
 import {useStores} from "../../stores/store";
 import {Route as Line} from '../../models/route';
 import {Button} from '../controls/Button';
@@ -13,9 +14,10 @@ export const RouteList: FC = () => {
     const history = useHistory();
 
     const [query, setQuery] = useState('');
+    const debounced = useDebounce(query);
     const [page, setPage] = useState(1);
 
-    const routes = usePaginatedItems(Line, page, query);
+    const routes = usePaginatedItems(Line, page, debounced);
 
     const {networkStore} = useStores();
 
